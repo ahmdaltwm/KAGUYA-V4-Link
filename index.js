@@ -1,6 +1,7 @@
 import fs from "fs";
 import login from "fca-deku";
 import { listen } from "./listen/listen.js";
+import './utils/kaguya.js';
 import { commandMiddleware, eventMiddleware } from "./middleware/index.js";
 import sleep from "time-sleep";
 import { log, notifer } from "./logger/index.js";
