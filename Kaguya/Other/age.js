@@ -6,7 +6,7 @@ export default {
   cooldowns: 60,
   description: "Age calculator",
   role: "member",
-  aliases: ["tinhtuoi"],
+  aliases: ["asia/manila"],
   execute: async ({ args, api }) => {
     const userInput = args[0];
 
@@ -20,7 +20,7 @@ export default {
       return api.sendMessage("Invalid day, month, or year of birth!", event.threadID);
     }
 
-    const [currentDay, currentMonth, currentYear] = moment.tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY").split("/").map(Number);
+    const [currentDay, currentMonth, currentYear] = moment.tz("Asia/Manila").format("DD/MM/YYYY").split("/").map(Number);
 
     const yearsPassed = currentYear - yearOfBirth;
     const monthsPassed = currentMonth - monthOfBirth + yearsPassed * 12;
