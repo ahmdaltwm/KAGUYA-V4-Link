@@ -3,7 +3,7 @@ export default {
   author: "Arjhil Dacayanan",
   cooldowns: 10,
   description: "Ping all members in the group!",
-  role: "admin",
+  role: "member",
   aliases: ["tagall"],
   execute: async ({ api, event, args }) => {
     try {

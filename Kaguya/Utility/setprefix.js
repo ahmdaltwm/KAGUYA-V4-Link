@@ -5,7 +5,7 @@ export default {
   author: "Arjhil Dacayanan",
   cooldowns: 60,
   description: "Set the group prefix",
-  role: "member",
+  role: "owner",
   aliases: ["prefix"],
   execute: async ({ event, Threads, args }) => {
     if (!event.isGroup) {
