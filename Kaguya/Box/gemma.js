@@ -22,7 +22,7 @@ class GemmaCommand {
       const gemmaResponse = response.data.answer || response.data.result || "No valid response from the Gemma API";
 
       const formattedMessage = `
-Gemma-7B 📜:
+Kaguya Gemma-7B Response 📜:
 ━━━━━━━━━━━━━━━
 
 ${gemmaResponse}

@@ -19,7 +19,7 @@ class BlackboxAICommand {
       const result = data.data || "No valid Blackbox AI response from the API";
 
       const formattedMessage = `
- Kaguya Response 📜🖋️: 
+ Kaguya Blackbox Response 📜🖋️: 
 
 ━━━━━━━━━━━━━━━
 

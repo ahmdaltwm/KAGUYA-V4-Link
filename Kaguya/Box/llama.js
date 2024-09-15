@@ -22,7 +22,7 @@ class LlamaCommand {
       const llamaResponse = response.data.response || "No valid response from the Llama API";
 
       const formattedMessage = `
-Llama-3-70B 📜:
+Kaguya Llama-3-70B Response 📜:
 
 ━━━━━━━━━━━━━━━
 

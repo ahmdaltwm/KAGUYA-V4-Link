@@ -22,7 +22,7 @@ class MixtralCommand {
       const mixtralResponse = response.data.answer || response.data.result || "No valid response from the Mixtral API";
 
       const formattedMessage = `
-Mixtral-8B 📜:
+Kaguya Mixtral-8B Response 📜:
 
 ━━━━━━━━━━━━━━━
 
