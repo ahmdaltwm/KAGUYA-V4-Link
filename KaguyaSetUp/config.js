@@ -1,6 +1,6 @@
 export default {
-    "prefix": ".", 
-    "BOT_NAME": "Yumi Sy",
+    "prefix": ",", 
+    "BOT_NAME": "Project Kaguya",
     "ADMIN_IDS": ["100040253298048"],
     "options": {
         "forceLogin": true,

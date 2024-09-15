@@ -1,3 +1,6 @@
+import axios from 'axios';
+import request from 'request';
+
 class Help {
   constructor() {
     this.name = "help";
@@ -39,15 +42,40 @@ class Help {
           msg += `\n\n🔍 To view detailed help for a command, reply to this message with the command's number.`;
           msg += `\n🔄 Usage: ${global.client.config.prefix}${this.name} <page> to navigate to the next page!`;
 
-          kaguya.reply(msg, (err, info) => {
-            client.handler.reply.set(info.messageID, {
-              name: this.name,
-              type: "info",
-              author: event.senderID,
-              commands: commandList,
+          const gifUrls = [
+            "https://i.postimg.cc/qMB8T1GK/f69d562f60418662c0564e3ad345fa17.gif",
+            "https://i.postimg.cc/0NBVWjTL/1043fbbcbe1683faecb17e46d6d0b0fb.gif",
+            "https://i.postimg.cc/W3qXQjjt/aa29c87da305509a8a4aa38ad45fe508.gif",
+          ];
+          const randomGifUrl = gifUrls[Math.floor(Math.random() * gifUrls.length)];
+
+          const callback = (stream) => {
+            kaguya.reply(
+              {
+                body: msg,
+                attachment: stream,
+              },
+              (err, info) => {
+                client.handler.reply.set(info.messageID, {
+                  name: this.name,
+                  type: "info",
+                  author: event.senderID,
+                  commands: commandList,
+                });
+                setTimeout(() => kaguya.unsend(info.messageID), 50000);
+              }
+            );
+          };
+
+          request(randomGifUrl)
+            .on('response', (res) => {
+              if (res.statusCode === 200) {
+                callback(res);
+              } else {
+                kaguya.reply("❌ Failed to load the image.");
+              }
             });
-            setTimeout(() => kaguya.unsend(info.messageID), 50000);
-          });
+
         } else {
           kaguya.reply("❌ There are no commands to display.");
         }
@@ -87,7 +115,32 @@ class Help {
 ━━━━━━━━━━━━━━━
 `;
 
-    kaguya.reply(replyMsg);
+    const gifUrls = [
+      "https://i.postimg.cc/qMB8T1GK/f69d562f60418662c0564e3ad345fa17.gif",
+      "https://i.postimg.cc/0NBVWjTL/1043fbbcbe1683faecb17e46d6d0b0fb.gif",
+      "https://i.postimg.cc/W3qXQjjt/aa29c87da305509a8a4aa38ad45fe508.gif",
+    ];
+    const randomGifUrl = gifUrls[Math.floor(Math.random() * gifUrls.length)];
+
+    const callback = (stream) => {
+      kaguya.reply(
+        {
+          body: replyMsg,
+          attachment: stream,
+        },
+        event.threadID,
+        event.messageID
+      );
+    };
+
+    request(randomGifUrl)
+      .on('response', (res) => {
+        if (res.statusCode === 200) {
+          callback(res);
+        } else {
+          kaguya.reply("❌ Failed to load the image.");
+        }
+      });
   }
 }
 

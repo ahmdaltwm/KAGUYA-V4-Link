@@ -1,3 +1,6 @@
+import axios from 'axios';
+import request from 'request';
+
 class MenuCommand {
   constructor() {
     this.name = "menu";
@@ -24,13 +27,39 @@ class MenuCommand {
     msg += `\n━━━━━━━━━━━━━━━\nTotal Commands: ${commandList.length}`;
     msg += `\n\nReply with the number of the command to see more details.`;
 
-    api.sendMessage(msg, event.threadID, (err, info) => {
-      global.client.handler.reply.set(info.messageID, {
-        name: this.name,
-        author: event.senderID,
-        commands: commandList,
+    const gifUrls = [
+      "https://i.postimg.cc/d0FRGMWW/7cb0f6a884078a4bacf5b42b8bd6eb16.gif",
+      "https://i.postimg.cc/GpkCSDxL/e39c5d4994e9835270e80e78ca7d7e95.gif",
+      "https://i.postimg.cc/Kj3QJPtQ/98025eea0cffc301c68ca9366c7cea25.gif",
+    ];
+    const randomGifUrl = gifUrls[Math.floor(Math.random() * gifUrls.length)];
+
+    const callback = (stream) => {
+      api.sendMessage(
+        {
+          body: msg,
+          attachment: stream,
+        },
+        event.threadID,
+        (err, info) => {
+          if (err) console.error(err);
+          global.client.handler.reply.set(info.messageID, {
+            name: this.name,
+            author: event.senderID,
+            commands: commandList,
+          });
+        }
+      );
+    };
+
+    request(randomGifUrl)
+      .on('response', (res) => {
+        if (res.statusCode === 200) {
+          callback(res);
+        } else {
+          api.sendMessage("❌ Failed to load the image.", event.threadID);
+        }
       });
-    });
   }
 
   async onReply({ reply, event, api }) {
@@ -55,7 +84,32 @@ class MenuCommand {
 ━━━━━━━━━━━━━━━
 `;
 
-    api.sendMessage(replyMsg, event.threadID, event.messageID);
+    const gifUrls = [
+      "https://i.postimg.cc/d0FRGMWW/7cb0f6a884078a4bacf5b42b8bd6eb16.gif",
+      "https://i.postimg.cc/GpkCSDxL/e39c5d4994e9835270e80e78ca7d7e95.gif",
+      "https://i.postimg.cc/Kj3QJPtQ/98025eea0cffc301c68ca9366c7cea25.gif",
+    ];
+    const randomGifUrl = gifUrls[Math.floor(Math.random() * gifUrls.length)];
+
+    const callback = (stream) => {
+      api.sendMessage(
+        {
+          body: replyMsg,
+          attachment: stream,
+        },
+        event.threadID,
+        event.messageID
+      );
+    };
+
+    request(randomGifUrl)
+      .on('response', (res) => {
+        if (res.statusCode === 200) {
+          callback(res);
+        } else {
+          api.sendMessage("❌ Failed to load the image.", event.threadID);
+        }
+      });
   }
 }
 
