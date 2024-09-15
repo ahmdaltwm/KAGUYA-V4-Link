@@ -11,13 +11,11 @@ class OutCommand {
   async execute({ api, event, args }) {
     try {
       if (!args[0]) {
-        // Remove the bot itself from the current group
         await api.removeUserFromGroup(api.getCurrentUserID(), event.threadID);
         return api.sendMessage("Bot has left the group.", event.threadID);
       }
 
       if (!isNaN(args[0])) {
-        // Remove the bot from the specified group ID
         await api.removeUserFromGroup(api.getCurrentUserID(), args[0]);
         return api.sendMessage("Bot has left the specified group.", event.threadID);
       }

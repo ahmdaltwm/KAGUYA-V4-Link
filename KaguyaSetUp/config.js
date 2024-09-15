@@ -1,5 +1,5 @@
 export default {
-    "prefix": "✓", 
+    "prefix": ".", 
     "BOT_NAME": "Yumi Sy",
     "ADMIN_IDS": ["100040253298048"],
     "options": {
