@@ -33,13 +33,20 @@ class Help {
         if (page <= totalPages) {
           const commandsToDisplay = commandList.slice(startIndex, endIndex);
 
-          let msg = `📜 Command List (Page ${page}/${totalPages}) 📜\n━━━━━━━━━━━━━━━\n`;
+          let msg = `╔═══════════╗\n               Project Kaguya\n╚═══════════╝\n`;
 
           commandsToDisplay.forEach((command, index) => {
-            msg += `\n[${startIndex + index + 1}] → Name: ${command.name}\n→ Permissions: ${this.roleText(command.role)}\n→ Aliases: ${this.aliasesText(command.aliases)}\n━━━━━━━━━━━━━━━`;
+            if (index % 10 === 0 && index > 0) {
+              msg += `╰───────────◊\n\n`;
+              msg += `╭─『 KAGUYA COMMAND ${Math.ceil((startIndex + index) / 10)}』\n`;
+            } else if (index === 0) {
+              msg += `╭─『 KAGUYA COMMAND ${Math.ceil((startIndex + index) / 10)}』\n`;
+            }
+            msg += `│✧${command.name}\n `;
           });
 
-          msg += `\n\n🔍 To view detailed help for a command, reply to this message with the command's number.`;
+          msg += `\n╰───────────◊\n`;
+          msg += `🔍 To view detailed help for a command, reply to this message with the command's name.`;
           msg += `\n🔄 Usage: ${global.client.config.prefix}${this.name} <page> to navigate to the next page!`;
 
           const gifUrls = [
@@ -82,15 +89,13 @@ class Help {
       }
     } else {
       const replyMsg = `
-[ ${getCommands.name.toUpperCase()} ]
-━━━━━━━━━━━━━━━
-→ Name: ${getCommands.name}
-→ Author: ${getCommands.author}
-→ Cooldown: ${getCommands.cooldowns}s
-→ Description: ${getCommands.description}
-→ Permissions: ${this.roleText(getCommands.role)}
-→ Aliases: ${this.aliasesText(getCommands.aliases)}
-━━━━━━━━━━━━━━━
+╭─『 ${getCommands.name.toUpperCase()} 』
+│✧Name: ${getCommands.name}
+│✧Author: ${getCommands.author}
+│✧Cooldown: ${getCommands.cooldowns}s
+│✧Description: ${getCommands.description}
+│✧Aliases: ${this.aliasesText(getCommands.aliases)}
+╰───────────◊
 `;
       kaguya.reply(replyMsg);
     }
@@ -98,21 +103,21 @@ class Help {
 
   async onReply({ reply, event }) {
     if (reply.author !== event.senderID) return;
-    if (event.body > reply.commands.length || !parseInt(event.body)) {
-      return kaguya.reply("❌ The number you replied with is invalid! Please try again.");
+    const commandName = event.body.toLowerCase();
+    const getCommands = reply.commands.find(cmd => cmd.name.toLowerCase() === commandName);
+
+    if (!getCommands) {
+      return kaguya.reply("❌ The command name you replied with is invalid! Please try again.");
     }
-    const getCommands = reply.commands[event.body - 1];
 
     const replyMsg = `
-[ ${getCommands.name.toUpperCase()} ]
-━━━━━━━━━━━━━━━
-→ Name: ${getCommands.name}
-→ Author: ${getCommands.author}
-→ Cooldown: ${getCommands.cooldowns}s
-→ Description: ${getCommands.description}
-→ Permissions: ${this.roleText(getCommands.role)}
-→ Aliases: ${this.aliasesText(getCommands.aliases)}
-━━━━━━━━━━━━━━━
+╭─『 ${getCommands.name.toUpperCase()} 』
+│✧Name: ${getCommands.name}
+│✧Author: ${getCommands.author}
+│✧Cooldown: ${getCommands.cooldowns}s
+│✧Description: ${getCommands.description}
+│✧Aliases: ${this.aliasesText(getCommands.aliases)}
+╰───────────◊
 `;
 
     const gifUrls = [
