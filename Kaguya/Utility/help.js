@@ -33,14 +33,14 @@ class Help {
         if (page <= totalPages) {
           const commandsToDisplay = commandList.slice(startIndex, endIndex);
 
-          let msg = `╔═══════════╗\n               Project Kaguya\n╚═══════════╝\n`;
+          let msg = `╔═══════════╗\n               𝐏𝐑𝐎𝐉𝐄𝐂𝐓 𝐊𝐀𝐆𝐔𝐘𝐀\n╚═══════════╝\n\n`;
 
           commandsToDisplay.forEach((command, index) => {
             if (index % 10 === 0 && index > 0) {
               msg += `╰───────────◊\n\n`;
-              msg += `╭─『 KAGUYA COMMAND ${Math.ceil((startIndex + index) / 10)}』\n`;
+              msg += `╭─『 𝐊𝐀𝐆𝐔𝐘𝐀 𝐂𝐎𝐌𝐌𝐀𝐍𝐃 ${Math.ceil((startIndex + index) / 10)}』\n`;
             } else if (index === 0) {
-              msg += `╭─『 KAGUYA COMMAND ${Math.ceil((startIndex + index) / 10)}』\n`;
+              msg += `╭─『 𝐊𝐀𝐆𝐔𝐘𝐀 𝐂𝐎𝐌𝐌𝐀𝐍𝐃 ${Math.ceil((startIndex + index) / 10)}』\n`;
             }
             msg += `│✧${command.name}\n `;
           });

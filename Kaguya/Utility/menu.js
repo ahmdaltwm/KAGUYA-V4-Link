@@ -18,14 +18,22 @@ class MenuCommand {
 
   async execute({ event, api }) {
     const commandList = Array.from(this.commands.values());
+    const totalCommands = commandList.length;
+    const commandsPerPage = 100;
 
-    let msg = "📜 Full Command List 📜\n━━━━━━━━━━━━━━━\n";
+    let msg = `╔═══════════╗\n               𝐏𝐑𝐎𝐉𝐄𝐂𝐓 𝐊𝐀𝐆𝐔𝐘𝐀\n╚═══════════╝\n\n`;
+    msg += `╭─『 𝐊𝐀𝐆𝐔𝐘𝐀 𝐌𝐄𝐍𝐔 𝐋𝐈𝐒𝐓 』\n`;
+
     commandList.forEach((command, index) => {
-      msg += `\n[${index + 1}] → ${command.name}`;
+      if (index % commandsPerPage === 0 && index > 0) {
+        msg += `╰───────────◊\n`;
+      }
+      msg += `│✧${command.name} \n`;
     });
 
-    msg += `\n━━━━━━━━━━━━━━━\nTotal Commands: ${commandList.length}`;
-    msg += `\n\nReply with the number of the command to see more details.`;
+    msg += `\n╰───────────◊\n`;
+    msg += `Total Commands: ${totalCommands}`;
+    msg += `\n\nReply with the command name to view detailed help for a command.`;
 
     const gifUrls = [
       "https://i.postimg.cc/d0FRGMWW/7cb0f6a884078a4bacf5b42b8bd6eb16.gif",
@@ -65,23 +73,21 @@ class MenuCommand {
   async onReply({ reply, event, api }) {
     if (reply.author !== event.senderID) return;
 
-    const commandIndex = parseInt(event.body);
-    if (isNaN(commandIndex) || commandIndex < 1 || commandIndex > reply.commands.length) {
-      return api.sendMessage("❌ Invalid number! Please try again.", event.threadID, event.messageID);
+    const commandName = event.body.toLowerCase();
+    const getCommand = reply.commands.find(cmd => cmd.name.toLowerCase() === commandName);
+
+    if (!getCommand) {
+      return api.sendMessage("❌ Invalid command name! Please try again.", event.threadID, event.messageID);
     }
 
-    const getCommand = reply.commands[commandIndex - 1];
-
     const replyMsg = `
-[ ${getCommand.name.toUpperCase()} ]
-━━━━━━━━━━━━━━━
-→ Name: ${getCommand.name}
-→ Author: ${getCommand.author}
-→ Cooldown: ${getCommand.cooldowns}s
-→ Description: ${getCommand.description}
-→ Permissions: ${this.roleText(getCommand.role)}
-→ Aliases: ${this.aliasesText(getCommand.aliases)}
-━━━━━━━━━━━━━━━
+╭─『 ${getCommand.name.toUpperCase()} 』
+│✧Name: ${getCommand.name}
+│✧Author: ${getCommand.author}
+│✧Cooldown: ${getCommand.cooldowns}s
+│✧Description: ${getCommand.description}
+│✧Aliases: ${this.aliasesText(getCommand.aliases)}
+╰───────────◊
 `;
 
     const gifUrls = [
