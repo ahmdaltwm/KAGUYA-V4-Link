@@ -12,6 +12,7 @@
   "author": "Arjhil",
   "license": "ISC",
   "dependencies": {
+    "@xaviabot/fb-downloader": "^1.0.14",
     "axios": "^1.7.7",
     "blessed": "^0.1.81",
     "bluebird": "^2.11.0",

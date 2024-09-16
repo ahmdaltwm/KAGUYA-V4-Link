@@ -195,5 +195,65 @@
         "time": null
       }
     }
+  },
+  {
+    "threadID": "7256617661106958",
+    "data": {
+      "name": "Chatbot Community (𝙴𝚍𝚞𝚌𝚊𝚝𝚒𝚘𝚗𝚊𝚕 𝚙𝚞𝚛𝚙𝚘𝚜𝚎)",
+      "threadThumbnail": "https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/456151443_1024559612506777_4641728602548491048_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=935a9d&_nc_ohc=Y2HeGcvMyXkQ7kNvgEJLn0c&_nc_ht=scontent-atl3-2.xx&_nc_gid=AfJSnpmsF9F9PReXoI0HF0n&oh=03_Q7cD1QGnZr9TUwhy4_jQUe8CqxZBMTDpiafGz5f-KujeUoIDtQ&oe=670F947C",
+      "members": 249,
+      "adminIDs": [
+        "61551923027328",
+        "61563002491403",
+        "61565019929507",
+        "100075534565817",
+        "100077338397319",
+        "100082748880815",
+        "100087212564100",
+        "100093264610467"
+      ],
+      "emoji": "🥇",
+      "prefix": null,
+      "approvalMode": false,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      }
+    }
+  },
+  {
+    "threadID": "7256617661106958",
+    "data": {
+      "name": "Chatbot Community (𝙴𝚍𝚞𝚌𝚊𝚝𝚒𝚘𝚗𝚊𝚕 𝚙𝚞𝚛𝚙𝚘𝚜𝚎)",
+      "threadThumbnail": "https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/456151443_1024559612506777_4641728602548491048_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=935a9d&_nc_ohc=Y2HeGcvMyXkQ7kNvgEJLn0c&_nc_ht=scontent-atl3-2.xx&_nc_gid=A8WVuWvXPQPebWZcgpIfvXy&oh=03_Q7cD1QEcBkMrd3LGps9ogV1AMTA1jjzEfzXZLz1I07yA5vyieA&oe=670F947C",
+      "members": 249,
+      "adminIDs": [
+        "61551923027328",
+        "61563002491403",
+        "61565019929507",
+        "100075534565817",
+        "100077338397319",
+        "100082748880815",
+        "100087212564100",
+        "100093264610467"
+      ],
+      "emoji": "🥇",
+      "prefix": null,
+      "approvalMode": false,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      }
+    }
   }
 ]

@@ -1,3 +1,4 @@
+import getFBInfo from "@xaviabot/fb-downloader";
 import axios from "axios";
 import fs from "fs";
 import path from "path";
@@ -7,7 +8,7 @@ const line = "━━━━━━━━━━━━━━━━━━";
 
 class MediaDownloadCommand {
   constructor() {
-    this.name = "tiktokdl";
+    this.name = "adown";
     this.author = "Arjhil";
     this.cooldowns = 3;
     this.description = "Automatically download TikTok, Facebook, and Capcut videos";
@@ -15,7 +16,6 @@ class MediaDownloadCommand {
     this.aliases = [];
   }
 
-  // Execute method that will be called by the framework
   async execute({ api, event, args }) {
     const link = args.join(" ");
 
@@ -73,7 +73,7 @@ class MediaDownloadCommand {
   async downloadAndSendFBContent(url, api, event) {
     const fbvid = path.join(__dirname, 'video.mp4'); 
     try {
-      const result = await getFBInfo(url);
+      const result = await getFBInfo(url); // Adjust this function call as needed
       let videoData = await axios.get(encodeURI(result.sd), { responseType: 'arraybuffer' });
       fs.writeFileSync(fbvid, Buffer.from(videoData.data, "utf-8"));
 
