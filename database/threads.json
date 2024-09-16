@@ -174,29 +174,6 @@
     }
   },
   {
-    "threadID": "26669770175970993",
-    "data": {
-      "name": "BOT TEST",
-      "threadThumbnail": null,
-      "members": 4,
-      "adminIDs": [
-        "100040253298048"
-      ],
-      "emoji": null,
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
     "threadID": "7256617661106958",
     "data": {
       "name": "Chatbot Community (𝙴𝚍𝚞𝚌𝚊𝚝𝚒𝚘𝚗𝚊𝚕 𝚙𝚞𝚛𝚙𝚘𝚜𝚎)",
@@ -243,6 +220,52 @@
         "100093264610467"
       ],
       "emoji": "🥇",
+      "prefix": null,
+      "approvalMode": false,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      }
+    }
+  },
+  {
+    "threadID": "26669770175970993",
+    "data": {
+      "name": "KAGUYA REBORN BOT PROJECT",
+      "threadThumbnail": null,
+      "members": 6,
+      "adminIDs": [
+        "100040253298048"
+      ],
+      "emoji": null,
+      "prefix": null,
+      "approvalMode": false,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      }
+    }
+  },
+  {
+    "threadID": "26669770175970993",
+    "data": {
+      "name": "KAGUYA REBORN BOT PROJECT",
+      "threadThumbnail": null,
+      "members": 6,
+      "adminIDs": [
+        "100040253298048"
+      ],
+      "emoji": null,
       "prefix": null,
       "approvalMode": false,
       "anti": {

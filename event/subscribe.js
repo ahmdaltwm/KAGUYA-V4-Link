@@ -27,7 +27,7 @@ export default {
       case "log:subscribe": {
         if (event.logMessageData.addedParticipants.some((i) => i.userFbId == api.getCurrentUserID())) {
           api.changeNickname(`Prefix: ${global.client.config.prefix} <=> ${!global.client.config.BOT_NAME ? "Github: ttkienn" : global.client.config.BOT_NAME}`, event.threadID, api.getCurrentUserID());
-          return kaguya.send(`Connection successful! This bot, created by Arjhil Dacayanan, is now available to you.\n\nThank you for your interest in our products. Have fun spending time with us!`, event.threadID);
+          return kaguya.send(`𝐏𝐑𝐎𝐉𝐄𝐂𝐓 𝐊𝐀𝐆𝐔𝐘𝐀 𝐀𝐂𝐓𝐈𝐕𝐀𝐓𝐄𝐃 \n━━━━━━━━━━━━━━━━━━\nConnection successful! This bot [ KAGUYA PROJECT ], created by Arjhil Dacayanan, is now available to you.\n\nThank you for your interest in our products. Have fun spending time with us!\n━━━━━━━━━━━━━━━━━━\n`, event.threadID);
         } else {
           for(let i of event.logMessageData.addedParticipants){
             await Users.create(i.userFbId);
