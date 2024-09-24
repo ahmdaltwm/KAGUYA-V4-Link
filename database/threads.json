@@ -278,5 +278,28 @@
         "time": null
       }
     }
+  },
+  {
+    "threadID": "8169011059875567",
+    "data": {
+      "name": "Sneak Peak",
+      "threadThumbnail": null,
+      "members": 3,
+      "adminIDs": [
+        "100040253298048"
+      ],
+      "emoji": null,
+      "prefix": null,
+      "approvalMode": false,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      }
+    }
   }
 ]
