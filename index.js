@@ -1,5 +1,5 @@
 import fs from "fs";
-import login from "fca-deku";
+import login from "disme-fca";
 import { listen } from "./listen/listen.js";
 import './utils/kaguya.js';
 import { commandMiddleware, eventMiddleware } from "./middleware/index.js";
@@ -13,10 +13,9 @@ import axios from "axios";
 import semver from "semver";
 
 // replacr 
-const credentials = { email: "FB_EMAIL", password: "FB_PASSWORD" };
+  login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
+  if(err) return console.error(err);
 
-login(credentials, (err, api) => {
-  if (err) return console.error(err);
   // login
   fs.writeFileSync('KaguyaState.json', JSON.stringify(api.getAppState())); // create appstate
 });
