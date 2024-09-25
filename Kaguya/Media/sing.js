@@ -1,151 +1,150 @@
-import axios from "axios";
-import ytdl from "ytdl-core";
-import fs from "fs";
+import axios from 'axios';
+import fs from 'fs-extra';
+import path from 'path';
 
-class Sing {
-  name = "sing";
-  author = "Arjhil Dacayanan";
-  cooldowns = 10;
-  description = "Perhaps listening to music on messenger?";
-  role = "member";
-  aliases = ["audio", "mp3", "music"];
-  getImg = [[], [], []];
+export default {
+  name: "sing",
+  author: "Arjhil",
+  cooldowns: 60,
+  description: "Download a clip from YouTube",
+  role: "member",
+  aliases: ["song", "music"],
 
-  isYouTubeLink = (url) => /^(https?:\/\/)?(www\.)?(youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/.test(url);
+  async execute({ api, event }) {
+    const input = event.body;
+    const data = input.split(" ");
 
-  parseDurationInSeconds(duration) {
-    const [hours, minutes, seconds] = duration.split(':').map(part => parseInt(part) || 0);
-    return hours * 3600 + minutes * 60 + seconds;
-  }
-
-  async execute({ api, event, args }) {
-    try {
-      const KeywordsOrLink = args.join(" ");
-      const isYouTube = this.isYouTubeLink(KeywordsOrLink);
-
-      if (!KeywordsOrLink && !isYouTube) {
-        return api.sendMessage("Please enter keywords or music link!", event.threadID);
-      }
-
-      if (!isYouTube) {
-        const {
-          data: { results = [] },
-        } = await axios.get(encodeURI(`http://8.219.10.246:8080/youtube/search?query=${KeywordsOrLink}`));
-
-        if (!results.length) {
-          return api.sendMessage(`No results found for: ${KeywordsOrLink}`, event.threadID);
-        }
-
-        let message = "";
-        let sequenceNumber = 1;
-
-        for (let i = 0; i < results.length && i <= 10; i++) {
-          const result = results[i];
-          const music = result.video;
-
-          if (music && music.title) {
-            const durationInSeconds = this.parseDurationInSeconds(music.duration);
-
-            if (durationInSeconds > 1 * 60 * 60) {
-              continue;
-            }
-
-            message += `${sequenceNumber}. ${music.title}\nDuration: ${music.duration}\nUploaded on: ${music.upload_date}\n\n`;
-
-            const path = `./cache/other/sing_${event.senderID}_${Math.random()}.jpg`;
-            const { data: img } = await axios.get(result.video.thumbnail_src, {
-              responseType: "arraybuffer",
-            });
-
-            fs.writeFileSync(path, Buffer.from(img));
-
-            this.getImg = [
-              [...this.getImg[0], fs.createReadStream(path)],
-              [...this.getImg[1], path],
-              [...this.getImg[2], result],
-            ];
-            sequenceNumber++;
-          }
-        }
-
-        api.sendMessage(
-          {
-            body: message,
-            attachment: this.getImg[0],
-          },
-          event.threadID,
-          async (err, info) => {
-            if (err) return;
-
-            client.handler.reply.set(info.messageID, {
-              name: this.name,
-              author: event.senderID,
-              musicData: this.getImg[2],
-              type: "choose",
-            });
-
-            this.getImg[1].forEach((link) => fs.unlinkSync(link));
-          }
-        );
-      } else {
-        await this.downloadMusic(api, event, KeywordsOrLink);
-      }
-    } catch (err) {
-      console.error(err);
+    if (data.length < 2) {
+      return api.sendMessage("⚠️ | Please enter the name of the song.", event.threadID);
     }
-  }
 
-  async downloadMusic(api, event, url, title = "") {
-    const path = `./cache/other/sing_${Math.random()}.mp3`;
+    data.shift();
+    const videoName = data.join(" ");
 
     try {
-      await new Promise((resolve, reject) => {
-        const musicStream = ytdl(url, {
-          quality: "lowestaudio",
+      const sentMessage = await api.sendMessage(`✔ | Searching for the requested song "${videoName}". Please wait...`, event.threadID);
+
+      const searchUrl = `https://c-v1.onrender.com/yt/s?query=${encodeURIComponent(videoName)}`;
+      const searchResponse = await axios.get(searchUrl);
+
+      const searchResults = searchResponse.data;
+      if (!searchResults || searchResults.length === 0) {
+        return api.sendMessage("⚠️ | No results were found.", event.threadID);
+      }
+
+      let msg = '🎵 | The following results were found:\n';
+      const selectedResults = searchResults.slice(0, 4); // Get only the first 4 results
+      const attachments = [];
+
+      for (let i = 0; i < selectedResults.length; i++) {
+        const video = selectedResults[i];
+        const videoIndex = i + 1;
+        msg += `\n${videoIndex}. ❀ Title: ${video.title}`;
+
+        // Download thumbnail and add to attachments
+        const imagePath = path.join(process.cwd(), 'cache', `video_thumb_${videoIndex}.jpg`);
+        const imageStream = await axios({
+          url: video.thumbnail,
+          responseType: 'stream',
         });
 
-        const writeStream = fs.createWriteStream(path);
+        const writer = fs.createWriteStream(imagePath);
+        imageStream.data.pipe(writer);
 
-        musicStream.on("end", resolve);
-        musicStream.on("error", (error) => {
-          reject(error);
+        await new Promise((resolve) => {
+          writer.on('finish', resolve);
         });
 
-        musicStream.pipe(writeStream);
+        attachments.push(fs.createReadStream(imagePath));
+      }
+
+      msg += '\n\n📥 | Please reply with a number to download and listen to the song.';
+
+      api.unsendMessage(sentMessage.messageID);
+
+      api.sendMessage({ body: msg, attachment: attachments }, event.threadID, (error, info) => {
+        if (error) return console.error(error);
+
+        global.client.handler.reply.set(info.messageID, {
+          author: event.senderID,
+          type: "pick",
+          name: "song",
+          searchResults: selectedResults,
+          unsend: true
+        });
+
+        // Delete temporary images after sending the message
+        attachments.forEach((file) => fs.unlinkSync(file.path));
       });
 
-      api.sendMessage(
-        {
-          body: title,
-          attachment: fs.createReadStream(path),
-        },
-        event.threadID,
-        (err) => {
-          if (err) {
-            console.error("Error sending message:", err);
-          }
-          fs.unlinkSync(path);
-        },
-        event.messageID
-      );
-    } catch (err) {
-      console.error(err);
-      return api.sendMessage("An error occurred, unable to download music!", event.threadID);
+    } catch (error) {
+      console.error('[ERROR]', error);
+      api.sendMessage('🥱 ❀ An error occurred while processing the command.', event.threadID);
     }
-  }
+  },
 
   async onReply({ api, event, reply }) {
-    if (reply.type === "choose") {
-      const chooseIndex = parseInt(event.body - 1);
+    if (reply.type !== 'pick') return;
 
-      if (isNaN(chooseIndex) || chooseIndex < 0 || chooseIndex >= reply.musicData.length) {
-        return api.sendMessage("Invalid choice!", event.threadID);
+    const { author, searchResults } = reply;
+
+    if (event.senderID !== author) {
+      return api.sendMessage("⚠️ | This is not for you.", event.threadID);
+    }
+
+    const selectedIndex = parseInt(event.body, 10) - 1;
+
+    if (isNaN(selectedIndex) || selectedIndex < 0 || selectedIndex >= searchResults.length) {
+      return api.sendMessage("❌ | Invalid response. Please reply with a valid number.", event.threadID);
+    }
+
+    const video = searchResults[selectedIndex];
+    const videoUrl = video.videoUrl;
+
+    try {
+      const downloadUrl = `https://ccproject10-df3227f754.onlitegix.com/api/yt/audio?url=${encodeURIComponent(videoUrl)}`;
+      const downloadResponse = await axios.get(downloadUrl);
+
+      const audioFileUrl = downloadResponse.data.url; // Correctly handling the new API response format
+
+      if (!audioFileUrl) {
+        return api.sendMessage("⚠️ | No download link for the song was found.", event.threadID);
       }
 
-      const selectedMusicData = reply.musicData[chooseIndex];
-      await this.downloadMusic(api, event, selectedMusicData.video.url, selectedMusicData.video.title);
+      api.setMessageReaction("⬇️", event.messageID, (err) => {}, true);
+
+      const fileName = `${event.senderID}.mp3`;
+      const filePath = path.join(process.cwd(), 'cache', fileName);
+
+      const writer = fs.createWriteStream(filePath);
+      const audioStream = await axios({
+        url: audioFileUrl,
+        responseType: 'stream'
+      });
+
+      audioStream.data.pipe(writer);
+
+      writer.on('finish', () => {
+        if (fs.statSync(filePath).size > 26214400) {
+          fs.unlinkSync(filePath);
+          return api.sendMessage('❌ | The file cannot be sent because it is larger than 25MB.', event.threadID);
+        }
+
+        api.setMessageReaction("✅", event.messageID, (err) => {}, true);
+
+        const message = {
+          body: `✅ | The song has been downloaded:\n❀ Title: ${video.title}`,
+          attachment: fs.createReadStream(filePath)
+        };
+
+        api.sendMessage(message, event.threadID, () => {
+          fs.unlinkSync(filePath);
+        });
+      });
+
+    } catch (error) {
+      console.error('[ERROR]', error);
+      api.sendMessage('🥱 ❀ An error occurred while processing the command.', event.threadID);
     }
   }
-}
-
-export default new Sing();
+};

@@ -1,45 +1,40 @@
-import os from 'os';
+import moment from "moment-timezone";
 
-class UptimeCommand {
-  constructor() {
-    this.name = "upt";
-    this.version = "1.0.0";
-    this.author = "Arjhil Dacayanan";
-    this.cooldowns = 5;
-    this.description = "Displays bot uptime and current date";
-    this.role = "member";
-    this.aliases = [];
+export default {
+  name: "upt",
+  author: "Kaguya Project",
+  cooldowns: 60,
+  description: "Bot data",
+  role: "member",
+  aliases: ["uptime"],
+  execute: async ({ args, api, event }) => {
+    const currentTime = moment().tz('Asia/Manila').format('YYYY-MM-DD hh:mm:ss A');
+
+    const uptime = process.uptime();
+    const hours = Math.floor(uptime / 3600);
+    const minutes = Math.floor((uptime - (hours * 3600)) / 60);
+    const seconds = Math.floor(uptime % 60);
+    const uptimeStr = `The bot has been running for ${hours} hours, ${minutes} minutes, and ${seconds} seconds`;
+
+    const threads = await api.getThreadList(99999, null, ['INBOX']);
+
+    let userCount = 0;
+    let groupCount = 0;
+
+    threads.forEach(thread => {
+      if (thread.isGroup) {
+        groupCount++;
+      } else {
+        userCount++;
+      }
+    });
+
+    const output = `Kaguya Status\n\n━━━━━━━━━━━━━━━━━━\n\n` +
+      `Current time ⏰: ${currentTime},\n` +
+      `Total number of users 🧿: ${userCount}\n` +
+      `Total number of groups 🗝️: ${groupCount}\n\n` +
+      `${uptimeStr}\n\n━━━━━━━━━━━━━━━━━━`;
+
+    api.sendMessage(output, event.threadID);
   }
-
-  async execute({ api, event }) {
-    try {
-      const uptimeInSeconds = os.uptime();
-      const days = Math.floor(uptimeInSeconds / (24 * 60 * 60));
-      const hours = Math.floor((uptimeInSeconds % (24 * 60 * 60)) / (60 * 60));
-      const minutes = Math.floor((uptimeInSeconds % (60 * 60)) / 60);
-      const seconds = Math.floor(uptimeInSeconds % 60);
-
-      const currentDate = new Date().toLocaleString();
-
-      const uptimeMessage = `
-      🤖 Kaguya Uptime:
-      ━━━━━━━━━━━━━━━━━━
-      Days: ${days}
-      Hours: ${hours}
-      Minutes: ${minutes}
-      Seconds: ${seconds}
-      ━━━━━━━━━━━━━━━━━━
-      Current Date: 
-      ${currentDate}
-      ━━━━━━━━━━━━━━━━━━
-      `;
-
-      return api.sendMessage(uptimeMessage, event.threadID, event.messageID);
-    } catch (error) {
-      console.error("Error fetching uptime:", error);
-      return api.sendMessage("❌ An error occurred while fetching uptime.", event.threadID, event.messageID);
-    }
-  }
-}
-
-export default new UptimeCommand();
+};
