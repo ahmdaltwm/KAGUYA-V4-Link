@@ -5,7 +5,7 @@ export default {
     "options": {
         "forceLogin": true,
         "listenEvents": true,
-        "listenTyping": false,
+        "listenTyping": true,
         "logLevel": "silent",
         "updatePresence": true,
         "selfListen": true
