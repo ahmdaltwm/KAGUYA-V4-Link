@@ -1,19 +1,18 @@
 import fs from "fs";
-import login from "disme-fca";
+import login from "./logins/fca-disme/index.js"; //fca disme modify by CC PROJECTS [JONELL MAGALLANES ]
 import { listen } from "./listen/listen.js";
 import './utils/kaguya.js';
 import { commandMiddleware, eventMiddleware } from "./middleware/index.js";
 import sleep from "time-sleep";
 import { log, notifer } from "./logger/index.js";
 import gradient from "gradient-string";
-import chokidar from "chokidar";
 import config from "./KaguyaSetUp/config.js";
 import EventEmitter from "events";
 import axios from "axios";
 import semver from "semver";
 
 // replacr 
-  login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
+login({email: "FB_EMAIL", password: "FB_PASSWORD"}, (err, api) => {
   if(err) return console.error(err);
 
   // login
@@ -37,22 +36,9 @@ class Kaguya extends EventEmitter {
       process.exit(1);
     });
     this.currentConfig = config;
-    this.watcher = chokidar.watch("./KaguyaSetUp/config.js");
     this.credentials = fs.readFileSync("./KaguyaSetUp/KaguyaState.json");
     this.package = JSON.parse(fs.readFileSync("./package.json"));
-    this.setupEventListeners();
     this.checkCredentials();
-  }
-
-  setupEventListeners() {
-    this.watcher.on("change", async () => {
-      try {
-        const updatedConfig = await import("./KaguyaSetUp/config.js");
-        this.currentConfig = updatedConfig.default;
-      } catch (error) {
-        this.emit("system:error", "Unable to load new config!");
-      }
-    });
   }
 
   checkCredentials() {

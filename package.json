@@ -12,7 +12,9 @@
   "author": "Arjhil",
   "license": "ISC",
   "dependencies": {
+    "@duyhau/fca-unofficial": "^1.0.10",
     "@xaviabot/fb-downloader": "^1.0.14",
+    "@xaviabot/fca-unofficial": "^1.4.0",
     "axios": "^1.7.7",
     "blessed": "^0.1.81",
     "bluebird": "^2.11.0",

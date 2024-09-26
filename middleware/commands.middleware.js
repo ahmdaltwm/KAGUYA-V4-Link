@@ -19,7 +19,7 @@ export const commandMiddleware = async () => {
             if (!commands?.name) {
               log([
                 {
-                  message: "[ COMMAND ]: ",
+                  message: "[ KAGUYA ]: ",
                   color: "green",
                 },
                 {
@@ -32,7 +32,7 @@ export const commandMiddleware = async () => {
             if (typeof commands?.execute !== "function") {
               log([
                 {
-                  message: "[ COMMAND ]: ",
+                  message: "[ KAGUYA ]: ",
                   color: "green",
                 },
                 {
@@ -45,11 +45,11 @@ export const commandMiddleware = async () => {
             await global.client.commands.set(commands.name, commands);
             await log([
               {
-                message: "[ COMMAND ]: ",
+                message: "[ KAGUYA ]: ",
                 color: "green",
               },
               {
-                message: `Successfully loaded command: ./${directory.toLowerCase()}/${commands.name}`,
+                message: ` Kaguya Successfully loaded command: ./${directory.toLowerCase()}/${commands.name}`,
                 color: "white",
               },
             ]);
@@ -77,11 +77,11 @@ export const commandMiddleware = async () => {
           } catch (error) {
             log([
               {
-                message: "[ COMMAND ]: ",
+                message: "[ KAGUYA ]: ",
                 color: "green",
               },
               {
-                message: `Cannot load command: ${command} due to error: ${error}`,
+                message: `Kaguya Cannot load command: ${command} due to error: ${error}`,
                 color: "red",
               },
             ]);
@@ -93,11 +93,11 @@ export const commandMiddleware = async () => {
   } catch (error) {
     log([
       {
-        message: "[ COMMAND ]: ",
+        message: "[ KAGUYA ]: ",
         color: "green",
       },
       {
-        message: `Cannot load commands due to error: ${error}`,
+        message: `Kaguya Cannot load commands due to error: ${error}`,
         color: "red",
       },
     ]);

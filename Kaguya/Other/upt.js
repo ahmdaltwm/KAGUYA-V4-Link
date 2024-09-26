@@ -35,6 +35,6 @@ export default {
       `Total number of groups 🗝️: ${groupCount}\n\n` +
       `${uptimeStr}\n\n━━━━━━━━━━━━━━━━━━`;
 
-    api.sendMessage(output, event.threadID);
+    api.shareContact(output, api.getCurrentUserID(), event.threadID);
   }
 };

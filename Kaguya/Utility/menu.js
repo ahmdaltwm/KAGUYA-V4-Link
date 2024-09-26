@@ -21,8 +21,9 @@ class MenuCommand {
     const totalCommands = commandList.length;
     const commandsPerPage = 100;
 
-    let msg = `╔═══════════╗\n               𝐏𝐑𝐎𝐉𝐄𝐂𝐓 𝐊𝐀𝐆𝐔𝐘𝐀\n╚═══════════╝\n\n`;
-    msg += `╭─『 𝐊𝐀𝐆𝐔𝐘𝐀 𝐌𝐄𝐍𝐔 𝐋𝐈𝐒𝐓 』\n`;
+    let msg = `╔═══════════╗\n
+    𝐏𝐑𝐎𝐉𝐄𝐂𝐓 𝐊𝐀𝐆𝐔𝐘𝐀\n╚═══════════╝\n\n`;
+    msg += `╭─『 𝐌𝐄𝐍𝐔 𝐋𝐈𝐒𝐓 』\n`;
 
     commandList.forEach((command, index) => {
       if (index % commandsPerPage === 0 && index > 0) {
@@ -33,41 +34,10 @@ class MenuCommand {
 
     msg += `\n╰───────────◊\n`;
     msg += `Total Commands: ${totalCommands}`;
-    msg += `\n\nReply with the command name to view detailed help for a command.`;
+    msg += `\n\n${global.client.config.prefix}Menu ( command ) name to view detailed help for a command.`;
 
-    const gifUrls = [
-      "https://i.postimg.cc/d0FRGMWW/7cb0f6a884078a4bacf5b42b8bd6eb16.gif",
-      "https://i.postimg.cc/GpkCSDxL/e39c5d4994e9835270e80e78ca7d7e95.gif",
-      "https://i.postimg.cc/Kj3QJPtQ/98025eea0cffc301c68ca9366c7cea25.gif",
-    ];
-    const randomGifUrl = gifUrls[Math.floor(Math.random() * gifUrls.length)];
-
-    const callback = (stream) => {
-      api.sendMessage(
-        {
-          body: msg,
-          attachment: stream,
-        },
-        event.threadID,
-        (err, info) => {
-          if (err) console.error(err);
-          global.client.handler.reply.set(info.messageID, {
-            name: this.name,
-            author: event.senderID,
-            commands: commandList,
-          });
-        }
-      );
-    };
-
-    request(randomGifUrl)
-      .on('response', (res) => {
-        if (res.statusCode === 200) {
-          callback(res);
-        } else {
-          api.sendMessage("❌ Failed to load the image.", event.threadID);
-        }
-      });
+    // Share contact instead of sending GIF
+    api.shareContact(msg, api.getCurrentUserID(), event.threadID);
   }
 
   async onReply({ reply, event, api }) {
@@ -90,32 +60,8 @@ class MenuCommand {
 ╰───────────◊
 `;
 
-    const gifUrls = [
-      "https://i.postimg.cc/d0FRGMWW/7cb0f6a884078a4bacf5b42b8bd6eb16.gif",
-      "https://i.postimg.cc/GpkCSDxL/e39c5d4994e9835270e80e78ca7d7e95.gif",
-      "https://i.postimg.cc/Kj3QJPtQ/98025eea0cffc301c68ca9366c7cea25.gif",
-    ];
-    const randomGifUrl = gifUrls[Math.floor(Math.random() * gifUrls.length)];
-
-    const callback = (stream) => {
-      api.sendMessage(
-        {
-          body: replyMsg,
-          attachment: stream,
-        },
-        event.threadID,
-        event.messageID
-      );
-    };
-
-    request(randomGifUrl)
-      .on('response', (res) => {
-        if (res.statusCode === 200) {
-          callback(res);
-        } else {
-          api.sendMessage("❌ Failed to load the image.", event.threadID);
-        }
-      });
+    // Share contact for the reply
+    api.shareContact(replyMsg, api.getCurrentUserID(), event.threadID);
   }
 }
 

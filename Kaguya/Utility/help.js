@@ -8,7 +8,7 @@ class Help {
     this.cooldowns = 10;
     this.description = "View the bot's command list!";
     this.role = "member";
-    this.aliases = [];
+    this.aliases = ["Help to see command"];
     this.commands = global.client.commands;
   }
 
@@ -16,7 +16,7 @@ class Help {
 
   aliasesText = (aliases) => (Array.isArray(aliases) && aliases.length > 0 && !aliases.includes("") ? aliases.join(", ") : "None");
 
-  async execute({ args, event }) {
+  async execute({ args, event, api  }) {
     const [pageStr] = args;
     const getCommands = this.commands.get(pageStr);
 
@@ -33,55 +33,29 @@ class Help {
         if (page <= totalPages) {
           const commandsToDisplay = commandList.slice(startIndex, endIndex);
 
-          let msg = `╔═══════════╗\n               𝐏𝐑𝐎𝐉𝐄𝐂𝐓 𝐊𝐀𝐆𝐔𝐘𝐀\n╚═══════════╝\n\n`;
+          let msg = `╔══════════════╗\n`;
+          msg += `     𝐏𝐑𝐎𝐉𝐄𝐂𝐓 𝐊𝐀𝐆𝐔𝐘𝐀\n`;
+          msg += `╚══════════════╝\n\n`;
 
-          commandsToDisplay.forEach((command, index) => {
-            if (index % 10 === 0 && index > 0) {
-              msg += `╰───────────◊\n\n`;
-              msg += `╭─『 𝐊𝐀𝐆𝐔𝐘𝐀 𝐂𝐎𝐌𝐌𝐀𝐍𝐃 ${Math.ceil((startIndex + index) / 10)}』\n`;
-            } else if (index === 0) {
-              msg += `╭─『 𝐊𝐀𝐆𝐔𝐘𝐀 𝐂𝐎𝐌𝐌𝐀𝐍𝐃 ${Math.ceil((startIndex + index) / 10)}』\n`;
-            }
-            msg += `│✧${command.name}\n `;
+          msg += `╭─『 𝐂𝐎𝐌𝐌𝐀𝐍𝐃 𝐋𝐈𝐒𝐓 』\n`;
+
+          commandsToDisplay.forEach((command) => {
+            msg += `│✧ ${command.name.padEnd(20)}\n`;
           });
 
-          msg += `\n╰───────────◊\n`;
-          msg += `🔍 To view detailed help for a command, reply to this message with the command's name.`;
-          msg += `\n🔄 Usage: ${global.client.config.prefix}${this.name} <page> to navigate to the next page!`;
+          msg += `╰───────────────◊\n`;
+          msg += `To view detailed ${global.client.config.prefix}${this.name}`;
+          msg += `\n Usage: ${global.client.config.prefix}${this.name} <page> to navigate to the next page!`;
 
-          const gifUrls = [
-            "https://i.postimg.cc/qMB8T1GK/f69d562f60418662c0564e3ad345fa17.gif",
-            "https://i.postimg.cc/0NBVWjTL/1043fbbcbe1683faecb17e46d6d0b0fb.gif",
-            "https://i.postimg.cc/W3qXQjjt/aa29c87da305509a8a4aa38ad45fe508.gif",
-          ];
-          const randomGifUrl = gifUrls[Math.floor(Math.random() * gifUrls.length)];
-
-          const callback = (stream) => {
-            kaguya.reply(
-              {
-                body: msg,
-                attachment: stream,
-              },
-              (err, info) => {
-                client.handler.reply.set(info.messageID, {
-                  name: this.name,
-                  type: "info",
-                  author: event.senderID,
-                  commands: commandList,
-                });
-                setTimeout(() => kaguya.unsend(info.messageID), 50000);
-              }
-            );
-          };
-
-          request(randomGifUrl)
-            .on('response', (res) => {
-              if (res.statusCode === 200) {
-                callback(res);
-              } else {
-                kaguya.reply("❌ Failed to load the image.");
-              }
+          api.shareContact(msg, api.getCurrentUserID(), event.threadID, (err, info) => {
+            client.handler.reply.set(info.messageID, {
+              name: this.name,
+              type: "info",
+              author: event.senderID,
+              commands: commandList,
             });
+            setTimeout(() => kaguya.unsend(info.messageID), 50000);
+          });
 
         } else {
           kaguya.reply("❌ There are no commands to display.");
@@ -90,12 +64,12 @@ class Help {
     } else {
       const replyMsg = `
 ╭─『 ${getCommands.name.toUpperCase()} 』
-│✧Name: ${getCommands.name}
-│✧Author: ${getCommands.author}
-│✧Cooldown: ${getCommands.cooldowns}s
-│✧Description: ${getCommands.description}
-│✧Aliases: ${this.aliasesText(getCommands.aliases)}
-╰───────────◊
+│✧ Name: ${getCommands.name}
+│✧ Author: ${getCommands.author}
+│✧ Cooldown: ${getCommands.cooldowns}s
+│✧ Description: ${getCommands.description}
+│✧ Aliases: ${this.aliasesText(getCommands.aliases)}
+╰───────────────◊
 `;
       kaguya.reply(replyMsg);
     }
@@ -112,40 +86,15 @@ class Help {
 
     const replyMsg = `
 ╭─『 ${getCommands.name.toUpperCase()} 』
-│✧Name: ${getCommands.name}
-│✧Author: ${getCommands.author}
-│✧Cooldown: ${getCommands.cooldowns}s
-│✧Description: ${getCommands.description}
-│✧Aliases: ${this.aliasesText(getCommands.aliases)}
-╰───────────◊
+│✧ Name: ${getCommands.name}
+│✧ Author: ${getCommands.author}
+│✧ Cooldown: ${getCommands.cooldowns}s
+│✧ Description: ${getCommands.description}
+│✧ Aliases: ${this.aliasesText(getCommands.aliases)}
+╰───────────────◊
 `;
 
-    const gifUrls = [
-      "https://i.postimg.cc/qMB8T1GK/f69d562f60418662c0564e3ad345fa17.gif",
-      "https://i.postimg.cc/0NBVWjTL/1043fbbcbe1683faecb17e46d6d0b0fb.gif",
-      "https://i.postimg.cc/W3qXQjjt/aa29c87da305509a8a4aa38ad45fe508.gif",
-    ];
-    const randomGifUrl = gifUrls[Math.floor(Math.random() * gifUrls.length)];
-
-    const callback = (stream) => {
-      kaguya.reply(
-        {
-          body: replyMsg,
-          attachment: stream,
-        },
-        event.threadID,
-        event.messageID
-      );
-    };
-
-    request(randomGifUrl)
-      .on('response', (res) => {
-        if (res.statusCode === 200) {
-          callback(res);
-        } else {
-          kaguya.reply("❌ Failed to load the image.");
-        }
-      });
+    kaguya.reply(replyMsg, event.threadID, event.messageID);
   }
 }
 

@@ -147,38 +147,11 @@
     }
   },
   {
-    "threadID": "7617738784941507",
-    "data": {
-      "name": "🧑‍💻 Codify Hub | 2024 🤖🖥️",
-      "threadThumbnail": "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/436449992_1140157543864987_4274065099670186560_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=935a9d&_nc_ohc=KmgP2jdaYBEQ7kNvgGWzaMh&_nc_ht=scontent-sea1-1.xx&_nc_gid=Af5bgPsZ0Lcqeyf03ZVeZsH&oh=03_Q7cD1QFshvTbn9US4OfVzZyogJsLkpziQH-yoSObhhzQyevHUg&oe=670B8D68",
-      "members": 95,
-      "adminIDs": [
-        "100036956043695",
-        "100054706067959",
-        "100055943906136",
-        "100057648637336",
-        "100088334332155"
-      ],
-      "emoji": "💫",
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
     "threadID": "7256617661106958",
     "data": {
       "name": "Chatbot Community (𝙴𝚍𝚞𝚌𝚊𝚝𝚒𝚘𝚗𝚊𝚕 𝚙𝚞𝚛𝚙𝚘𝚜𝚎)",
       "threadThumbnail": "https://scontent-atl3-2.xx.fbcdn.net/v/t1.15752-9/456151443_1024559612506777_4641728602548491048_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=935a9d&_nc_ohc=Y2HeGcvMyXkQ7kNvgEJLn0c&_nc_ht=scontent-atl3-2.xx&_nc_gid=AfJSnpmsF9F9PReXoI0HF0n&oh=03_Q7cD1QGnZr9TUwhy4_jQUe8CqxZBMTDpiafGz5f-KujeUoIDtQ&oe=670F947C",
-      "members": 250,
+      "members": 248,
       "adminIDs": [
         "61551923027328",
         "61563002491403",
@@ -234,52 +207,6 @@
     }
   },
   {
-    "threadID": "26669770175970993",
-    "data": {
-      "name": "KAGUYA REBORN BOT PROJECT",
-      "threadThumbnail": null,
-      "members": 7,
-      "adminIDs": [
-        "100040253298048"
-      ],
-      "emoji": null,
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
-    "threadID": "26669770175970993",
-    "data": {
-      "name": "KAGUYA REBORN BOT PROJECT",
-      "threadThumbnail": null,
-      "members": 6,
-      "adminIDs": [
-        "100040253298048"
-      ],
-      "emoji": null,
-      "prefix": null,
-      "approvalMode": false,
-      "anti": {
-        "nameBox": false,
-        "imageBox": false
-      },
-      "banned": {
-        "status": false,
-        "reason": null,
-        "time": null
-      }
-    }
-  },
-  {
     "threadID": "8169011059875567",
     "data": {
       "name": "Sneak Peak",
@@ -291,6 +218,32 @@
       "emoji": null,
       "prefix": null,
       "approvalMode": false,
+      "anti": {
+        "nameBox": false,
+        "imageBox": false
+      },
+      "banned": {
+        "status": false,
+        "reason": null,
+        "time": null
+      }
+    }
+  },
+  {
+    "threadID": "7876308042479999",
+    "data": {
+      "name": "tvd 🫶",
+      "threadThumbnail": "https://scontent-ord5-1.xx.fbcdn.net/v/t1.15752-9/458088174_1952976248481163_8815801341097813494_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=935a9d&_nc_ohc=Cc89Y-Eh_rkQ7kNvgGbWdpi&_nc_ht=scontent-ord5-1.xx&_nc_gid=AFRDOy2fu7dMI3d6Ek7Ukf5&oh=03_Q7cD1QG227HeQCcNBzorvCgrAnHtdrNUI_QNU6bf_70H8x0adQ&oe=671C44D1",
+      "members": 88,
+      "adminIDs": [
+        "61554969614398",
+        "61563211151880",
+        "61565228085572",
+        "100086132330758"
+      ],
+      "emoji": "🥱",
+      "prefix": null,
+      "approvalMode": true,
       "anti": {
         "nameBox": false,
         "imageBox": false

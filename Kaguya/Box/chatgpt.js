@@ -14,17 +14,13 @@ class ChatGPTCommand {
   async execute({ api, event, args }) {
     const userMessage = args.join(' ');
     if (!userMessage) {
-      return api.sendMessage('Kaguya Gpt4 Response:\n━━━━━━━━━━━━━━━━━━\nPlease provide a message to send to ChatGPT.\n━━━━━━━━━━━━━━━━━━', event.threadID, event.messageID);
+      return api.sendMessage('Kaguya Gpt4 Response:\n━━━━━━━━━━━━━━━━━━\nPlease provide a message to send to ChatGPT.\n━━━━━━━━━━━━━━━━━━', event.threadID);
     }
 
     const apiUrl = `https://jonellccprojectapis10.adaptable.app/api/chatgpt?input=${encodeURIComponent(userMessage)}`;
 
-    const initialMessage = await new Promise((resolve, reject) => {
-      api.sendMessage('⌛ Kaguya Thinking...', event.threadID, (err, info) => {
-        if (err) return reject(err);
-        resolve(info);
-      });
-    });
+    const initialMessage = await
+      api.sendMessage('⌛ Kaguya Thinking...', event.threadID);
 
     try {
       const response = await axios.get(apiUrl);
@@ -32,9 +28,9 @@ class ChatGPTCommand {
 
       const formattedResponse = `🤖 Kaguya Gpt4 Response\n━━━━━━━━━━━━━━━━━━\n${gptResponse.trim()}\n━━━━━━━━━━━━━━━━━━`;
 
-      await api.editMessage(formattedResponse, initialMessage.messageID);
+   api.editMessage(formattedResponse, initialMessage.messageID.threadID);
     } catch (error) {
-      await api.editMessage('❌ An error occurred while trying to reach ChatGPT. Please try again later.', initialMessage.messageID);
+      await api.editMessage('❌ An error occurred while trying to reach ChatGPT. Please try again later.', initialMessage.messageID, event.threadID);
     }
   }
 }
