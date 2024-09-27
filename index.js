@@ -1,5 +1,5 @@
 import fs from "fs";
-import login from "./logins/fca-disme/index.js"; //fca disme modify by CC PROJECTS [KAGUYA TEAM - JONELL MAGALLANES]
+import login from "./logins/fca-new/fb-chat-api/index.js"; //fca fb-chat-api by ntkhang and modify by CC PROJECTS [KAGUYA TEAM - JONELL MAGALLANES]
 import { listen } from "./listen/listen.js";
 import './utils/kaguya.js';
 import { commandMiddleware, eventMiddleware } from "./middleware/index.js";

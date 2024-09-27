@@ -32,13 +32,13 @@ class SendComCommand {
         postID = postID[0];
       }
 
-      await api.sendMessage("Extracting URL POST Into POST ID...", event.threadID, event.messageID);
+   api.editMessage("Extracting URL POST Into POST ID...", sendingMessage.messageID, event.threadID, event.messageID);
 
       if (!postID) {
         return api.sendMessage("Invalid URL. Please provide a valid Facebook post URL.", event.threadID, event.messageID);
       }
 
-      await api.sendComment(comment, postID);
+       api.sendComment(comment, postID);
 
       const successMessage = `
 𝗖𝗼𝗺𝗺𝗲𝗻𝘁 𝗣𝗼𝘀𝘁 𝗖𝗠𝗗 📜:
@@ -48,10 +48,10 @@ POST ID: ${postID}
 ━━━━━━━━━━━━━━━━━━
       `;
 
-      await api.sendMessage(successMessage, event.threadID, event.messageID);
+   api.editMessage(successMessage, sendingMessage.messageID, event.threadID, event.messageID);
     } catch (error) {
       console.error('Error sending comment:', error.message);
-      await api.sendMessage(error.message, event.threadID, event.messageID);
+       api.sendMessage(error.message, event.threadID, event.messageID);
     }
   }
 }

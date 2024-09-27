@@ -157,4 +157,4 @@ module.exports = function (defaultFuncs, api, ctx) {
     } else throw new Error("Invalid content");
   };
 };
-// example usage 
+// example usage
