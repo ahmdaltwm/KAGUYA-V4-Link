@@ -17,6 +17,6 @@ export default {
             uri: "mongodb://0.0.0.0:27017"
         }
     },
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 8084,
     mqtt_refresh: 1200000
 };
