@@ -1,6 +1,6 @@
 
 hidden = [".config", "package-lock.json"]
-run = "npm run dev"
+run = "npm start"
 modules = ["nodejs-20", "web", "nix"]
 
 [[hints]]
