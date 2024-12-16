@@ -1,7 +1,7 @@
 export default {
     "prefix": ".", 
-    "BOT_NAME": "Project Kaguya",
-    "ADMIN_IDS": ["100040253298048"],
+    "BOT_NAME": " Kaguya",
+    "ADMIN_IDS": ["100018451976977"],
     "options": {
         "forceLogin": true,
         "listenEvents": true,
